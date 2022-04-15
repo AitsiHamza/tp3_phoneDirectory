@@ -10,9 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".EditPerson"/>
-        <activity
-            android:name=".AddPerson"/>
+            android:name=".PersonInfo"
+            android:exported="false" />
+        <activity android:name=".EditPerson" />
+        <activity android:name=".AddPerson" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

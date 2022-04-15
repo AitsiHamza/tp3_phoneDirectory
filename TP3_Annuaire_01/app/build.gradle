@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.tp3_annuaire_01"
-        minSdk 15
+        minSdk 22
         targetSdk 30
         versionCode 1
         versionName "1.0"

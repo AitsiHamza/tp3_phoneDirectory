@@ -27,4 +27,7 @@ public interface PersonneDao {
 
     @Delete
     void delete(Personne personne);
+
+    @Query("DELETE FROM personne")
+    void deleteAll();
 }

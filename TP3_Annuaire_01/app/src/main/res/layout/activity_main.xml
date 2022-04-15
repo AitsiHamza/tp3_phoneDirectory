@@ -17,14 +17,29 @@
             android:layout_width="wrap_content"
             android:text="Phone directory"
             android:textSize="30sp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/addPerson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             app:srcCompat="@android:drawable/ic_input_add" />
+
+        <ImageView
+            android:id="@+id/findPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+        <ImageView
+            android:id="@+id/deleteAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@android:drawable/ic_menu_search" />
     </LinearLayout>
 
 

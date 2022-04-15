@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView firstName,lastName,phone;
     RecyclerView recyclerView;
-    ImageView call,add,edit;
+    ImageView add,deleteAll;
     List<Personne> contacts;
     LinearLayoutManager linearLayoutManager;
     ContactsAdapter adapter;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         phone=findViewById(R.id.phone);
         recyclerView=findViewById(R.id.recycler_view);
         add=findViewById(R.id.addPerson);
+        deleteAll=findViewById(R.id.deleteAll);
 
         database=AppDatabase.getInstance(this);
         contacts=database.personneDao().getAll();
@@ -48,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
         adapter=new ContactsAdapter(MainActivity.this,contacts);
         recyclerView.setAdapter(adapter);
 
+        deleteAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database.personneDao().deleteAll();
+                contacts.clear();
+                adapter=new ContactsAdapter(MainActivity.this,contacts);
+                recyclerView.setAdapter(adapter);
+                Toast.makeText(MainActivity.this,"Delete all",Toast.LENGTH_SHORT);
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,15 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        RefreshListView((ArrayList<Personne>) database.personneDao().getAll());
-    }
-    void RefreshListView(ArrayList<Personne> contacts){
-        ContactsAdapter adapter = new ContactsAdapter(this,contacts);
-        recyclerView.setAdapter(adapter);
     }
 
 }
