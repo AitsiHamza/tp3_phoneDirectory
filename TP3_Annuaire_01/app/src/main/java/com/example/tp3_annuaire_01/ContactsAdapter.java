@@ -8,17 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
@@ -66,37 +63,53 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Personne personne=personneList.get(holder.getAdapterPosition());
+                Personne personne=personneList.get(holder.getAbsoluteAdapterPosition());
                 final int id=personne.id;
-                String firstname= personne.firstName;
-                String lastname=personne.lastName;
-                String phonenumber=personne.phone;
                 final Dialog dialog=new Dialog(context);
                 dialog.setContentView(R.layout.activity_edit_person);
 
                 int width= WindowManager.LayoutParams.MATCH_PARENT;
-                int height=WindowManager.LayoutParams.WRAP_CONTENT;
+                int height=WindowManager.LayoutParams.MATCH_PARENT;
                 dialog.getWindow().setLayout(width,height);
                 dialog.show();
 
-                final EditText firstName=dialog.findViewById(R.id.firstName);
-                final EditText lastName=dialog.findViewById(R.id.lastName);
-                final EditText phone=dialog.findViewById(R.id.phone);
-                ImageView btUpdate=dialog.findViewById(R.id.save);
+                final EditText firstName=dialog.findViewById(R.id.firstName_edit);
+                final EditText lastName=dialog.findViewById(R.id.lastName_edit);
+                final EditText phone=dialog.findViewById(R.id.phone_edit);
+                ImageView btUpdate=dialog.findViewById(R.id.save_edite),
+                returnHome=dialog.findViewById(R.id.returnHome_edit),
+                restart=dialog.findViewById(R.id.restart_edit);
 
-                firstName.setText(firstname);
-                lastName.setText(lastname);
-                phone.setText(phonenumber);
+                firstName.setText(personne.firstName);
+                lastName.setText(personne.lastName);
+                phone.setText(personne.phone);
 
+                returnHome.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent(context,MainActivity.class);
+                        Toast.makeText(context,"Return Home",Toast.LENGTH_SHORT);
+                        context.startActivity(intent);
+                    }
+                });
+                restart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        firstName.setText("");
+                        lastName.setText("");
+                        phone.setText("");
+                        Toast.makeText(context,"Reset",Toast.LENGTH_SHORT);
+                    }
+                });
                 btUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
-                        String firstname=firstName.getText().toString().trim();
-                        String lastname=lastName.getText().toString().trim();
-                        String phonenumber=phone.getText().toString().trim();
+                        personne.setFirstName(firstName.getText().toString().trim());
+                        personne.setLastName(lastName.getText().toString().trim());
+                        personne.setPhone(phone.getText().toString().trim());
 
-                        database.personneDao().update(id,phonenumber,firstname,lastname);
+                        database.personneDao().update(personne);
 
                         personneList.clear();
                         personneList.addAll(database.personneDao().getAll());

@@ -28,23 +28,12 @@ public class AddPerson extends AppCompatActivity {
         save=findViewById(R.id.save);
         restart=findViewById(R.id.restart);
         returnHome=findViewById(R.id.returnHome);
-/*
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                personne.setFirstName(firstName.getText().toString());
-                personne.setLastName(lastName.getText().toString());
-                personne.setPhone(phone.getText().toString());
-                database.personneDao().insert(personne);
-                Toast.makeText(AddPerson.this,"Added", Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
 
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(AddPerson.this, MainActivity.class);
+                Toast.makeText(AddPerson.this,"Return Home", Toast.LENGTH_SHORT).show();
                 startActivity(myIntent);
             }
         });
@@ -55,6 +44,7 @@ public class AddPerson extends AppCompatActivity {
                 firstName.setText("");
                 lastName.setText("");
                 phone.setText("");
+                Toast.makeText(AddPerson.this,"Restart", Toast.LENGTH_SHORT).show();
             }
         });
 

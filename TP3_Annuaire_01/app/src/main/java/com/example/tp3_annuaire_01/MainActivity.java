@@ -8,6 +8,8 @@ import androidx.room.Database;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -37,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         lastName=findViewById(R.id.lastName);
         phone=findViewById(R.id.phone);
         recyclerView=findViewById(R.id.recycler_view);
-        call=findViewById(R.id.call);
-        edit=findViewById(R.id.editPerson);
         add=findViewById(R.id.addPerson);
 
         database=AppDatabase.getInstance(this);
@@ -56,4 +56,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RefreshListView((ArrayList<Personne>) database.personneDao().getAll());
+    }
+    void RefreshListView(ArrayList<Personne> contacts){
+        ContactsAdapter adapter = new ContactsAdapter(this,contacts);
+        recyclerView.setAdapter(adapter);
+    }
+
 }
