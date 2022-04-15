@@ -15,9 +15,6 @@ public interface PersonneDao {
     @Query("SELECT * FROM personne")
     List<Personne> getAll();
 
-    @Query("DELETE FROM personne WHERE id = :personneId")
-    void deleteItem(int personneId);
-
     @Query("SELECT * FROM personne WHERE first_name LIKE :first OR " +
             "last_name LIKE :last LIMIT 1")
     Personne findByName(String first, String last);

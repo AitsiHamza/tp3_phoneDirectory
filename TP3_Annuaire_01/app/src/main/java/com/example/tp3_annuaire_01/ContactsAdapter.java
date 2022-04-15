@@ -120,6 +120,16 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             }
         });
 
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Personne personneDelete=personneList.get(holder.getAbsoluteAdapterPosition());
+                database.personneDao().delete(personneDelete);
+                personneList.clear();
+                personneList.addAll(database.personneDao().getAll());
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -129,7 +139,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView call,edit;
+        ImageView call,edit,delete;
         TextView firstName,lastName,phone;
 
         public ViewHolder(@NonNull View itemView) {
@@ -139,6 +149,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             lastName=itemView.findViewById(R.id.lastName);
             phone=itemView.findViewById(R.id.phone);
             edit=itemView.findViewById(R.id.editPerson);
+            delete=itemView.findViewById(R.id.deletePerson);
         }
     }
 }
