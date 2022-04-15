@@ -18,10 +18,13 @@ public interface PersonneDao {
     @Query("SELECT * FROM personne WHERE first_name LIKE :first AND " +
             "last_name LIKE :last LIMIT 1")
     Personne findByName(String first, String last);
-/*
-    @Query("SELECT * FROM personne WHERE phone_number LIKE :phone LIMIT 1")
-    Personne findByPhone(String phone);
-*/
+
+    @Query("UPDATE personne SET phone_number= :phone " +
+            " AND first_name= :firstName" +
+            " AND last_name= :lastName" +
+            " WHERE  id= :id")
+    void update(int id,String phone,String firstName,String lastName);
+
     @Insert
     void insert(Personne personne);
 
